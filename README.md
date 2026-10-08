@@ -34,6 +34,35 @@ DBC file can be found [here](https://github.com/corygrant/dingoFW/tree/master/db
 
 [Interactive BOM](https://htmlpreview.github.io/?https://github.com/corygrant/CANBoard/blob/main/docs/bom/ibom.html)
 
+# JLCPCB manufacturing export
+
+With KiCad 10+ (`kicad-cli`) and Python 3 installed, run:
+
+```bash
+./bin/export_jlcpcb.sh
+# Optional output directory:
+./bin/export_jlcpcb.sh /path/to/output
+```
+
+The default output is the git-ignored `JLCPCB/` directory:
+
+* `CANBoard-Gerbers.zip`: all four copper layers, masks, silkscreens, paste,
+  outline and separate plated/non-plated Excellon drill files.
+* `CANBoard-BOM.csv`: grouped by value, footprint and schematic `LCSC` field.
+* `CANBoard-POS.csv`: component positions (CPL), in millimetres on both sides.
+
+The BOM and POS contain matching populated SMD references. Through-hole parts,
+logos, jumpers and other footprints without eligible positions are omitted.
+Parts without an LCSC number remain in the assembly files with a warning.
+Gerbers, drills and positions share the board's drill/place origin. Copper zones
+are refilled during export without saving changes to the PCB.
+
+The script works from any directory and does not depend on `hellen-one`.
+Use `KICAD_CLI` or `PYTHON` to override executable paths. CSV headers follow
+[JLCPCB's KiCad export guide](https://jlcpcb.com/help/article/how-to-generate-the-bom-and-centroid-file-from-kicad).
+Rotations retain KiCad's orientation, normalized to 0–360 degrees; review part
+matches and orientations in JLCPCB's assembly preview before ordering.
+
 # Jumpers
 **CAN Term** : Soldering this jumper enables the 120 ohm terminating resistor across CANL/CANH
 
