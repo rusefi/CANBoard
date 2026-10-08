@@ -47,7 +47,6 @@ fp-info-cache
 *.xml
 
 JLC/
-JLCPCB/
 gerbers/
 
 # Byte-compiled / optimized / DLL files
